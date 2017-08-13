@@ -27,15 +27,16 @@ Example[Int].apply
 
 //Example[Person] ?
 def personExample: Example[Person] = ???
-//idea: given the parts, build the whole
-//   String
-//             ->    String :: Int     ->        Person
-//      Int                          Generic
-//
-//we need:
-//   Example[String]
-//   Example[Int]
-//   Generic[Person]
+/* idea: given the parts, build the whole
+ *    String
+ *              ->    String :: Int     ->        Person
+ *       Int                          Generic
+ *
+ * we need:
+ *    Example[String]
+ *    Example[Int]
+ *    Generic[Person]
+ */
 def personExample1(implicit
                     str: Example[String], // we've defined before
                     int: Example[Int],    // we've defined before
@@ -61,20 +62,21 @@ implicit def personExample2(implicit
 }
 Example[Person].apply
 
-//Example[A] ?
-//type class derivation
+
+//Example[A] ? (type class derivation)
 implicit def caseClassExample[A]: Example[A] = ???
-//idea: given the parts, build the whole
-//   String
-//      Int    ->    HList     ->        A
-//     (...)                 Generic
-//
-//we need:
-//   Example[HList]
-//      Example[String]
-//      Example[Int]
-//      Example[...]
-//   Generic[A]
+/* idea: given the parts, build the whole
+ *    String
+ *       Int    ->    HList     ->        A
+ *      (...)                 Generic
+ *
+ * we need:
+ *    Example[HList]
+ *       Example[String]
+ *       Example[Int]
+ *       Example[...]
+ *    Generic[A]
+ */
 implicit def caseClassExample1[A, Gen](implicit
                                        e: Example[HList],        //we'll define next
                                        gen: Generic.Aux[A, Gen], //shapeless creates for us
