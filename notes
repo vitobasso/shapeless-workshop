@@ -1,0 +1,30 @@
+shapeless
+	intro
+		the type astronaut's guide to shapeless
+			https://github.com/underscoreio/shapeless-guide
+		disclaimer
+			I have a short experience
+			you won't use very often
+				libs do it for you. e.g.: circe
+				my use case isn't that glorious
+			but maybe you're curious
+	core concepts
+		HList, Generic
+	 	Coproduct, ADTs
+	putting in practice
+		type classes
+		summon Generic
+		Generic.Aux[T, Gen]
+	debugging
+
+	boring details
+		dependent types
+		Lazy
+
+	more
+		LabelledGeneric, json
+		type classes for operations on HLists & Coproducts
+		Poly
+		Nat
+		ifs, loops, compile-time logic
+			http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/
