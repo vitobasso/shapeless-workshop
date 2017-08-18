@@ -30,19 +30,21 @@ val e1: Blo = Left(1)
 val e2: Blo = Right("bla")
 
 
-/* ADTs
- *
- * and
- *     (String, Int)
- *     Person(name: String, age: Int)
- *     String :: Int :: HNil
- *
- * or
- *     Either[String, Int]
- *     sealed trait Shape
- *        case class Circle(width: Double, height: Double) extends Shape
- *        case class Rectangle(radius: Double) extends Shape
- *     String :+: Int :+: CNil
+/* ADT = algebraic data type
+
+   product, tuples, records
+   "and"
+       (String, Int)
+       Person(name: String, age: Int)
+       String :: Int :: HNil
+
+   coproduct, aka sum type, aka disjoint union, aka variant type
+   "or"
+       Either[String, Int]
+       sealed trait Shape
+          case class Circle(width: Double, height: Double) extends Shape
+          case class Rectangle(radius: Double) extends Shape
+       String :+: Int :+: CNil
  */
 
 
