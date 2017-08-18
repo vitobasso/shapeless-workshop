@@ -14,7 +14,8 @@ implicit val strExample: Example[String] = Example.instance("bla")
 implicit val intExample: Example[Int] = Example.instance(1)
 
 
-//Example[A] ? (type class derivation)
+//generic type class derivation
+//Example[A] ?
 def caseClassExample[A]: Example[A] = ???
 /* idea: given the parts, build the whole
       String
@@ -66,7 +67,8 @@ Example[Int :: String :: HNil].apply
 implicit def caseClassExample2[A, Gen <: HList](implicit
         //*order matters*
         gen: Generic.Aux[A, Gen], //shapeless creates for us.
-        e: Lazy[Example[Gen]]     //we've just defined Example[HList] *lazy needed*
+        e: Lazy[Example[Gen]]     //we've just defined Example[HList]
+                                  // *lazy needed so compiler doesn't give up the implicit search on complex cases*
        ): Example[A] = {
   val hlist: Gen = e.value.apply
   val a: A = gen.from(hlist)

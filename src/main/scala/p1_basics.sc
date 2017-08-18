@@ -30,15 +30,15 @@ val e1: Blo = Left(1)
 val e2: Blo = Right("bla")
 
 
-/* ADT = algebraic data type
+/* ADT = algebraic data type (not to be confused with "abstract data type")
 
-   product, tuples, records
+   product, aka tuple, record
    "and"
        (String, Int)
        Person(name: String, age: Int)
        String :: Int :: HNil
 
-   coproduct, aka sum type, aka disjoint union, aka variant type
+   coproduct, aka sum type, disjoint union, variant type
    "or"
        Either[String, Int]
        sealed trait Shape

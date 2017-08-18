@@ -3,11 +3,13 @@ shapeless
 		the type astronaut's guide to shapeless
 			https://github.com/underscoreio/shapeless-guide
 		disclaimer
-			I have a short experience
 			you won't use very often
-				libs do it for you. e.g.: circe
+				libs do it for you. e.g.: circe, finch
 				my use case isn't that glorious
 			but maybe you're curious
+		uses macros under the hood
+		    macros can do compile time reflection
+		    AST = abstract syntax tree
 	core concepts
 		HList, Generic
 	 	Coproduct, ADTs
