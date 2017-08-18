@@ -2,14 +2,23 @@ shapeless
 	intro
 		the type astronaut's guide to shapeless
 			https://github.com/underscoreio/shapeless-guide
-		disclaimer
-			you won't use very often
-				libs do it for you. e.g.: circe, finch
-				my use case isn't that glorious
-			but maybe you're curious
-		uses macros under the hood
-		    macros can do compile time reflection
-		    AST = abstract syntax tree
+
+		shapeless
+		    is a type class and dependent type based generic programming library
+		    helps you abstract over arities, scrape boilerplate
+		often libs do the job for you. e.g.: circe, finch
+		programming at type level
+            generic type class derivation
+		    ifs, loops, Nat
+            	http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/
+        macros (used by shapeless under the hood)
+            compile time reflection
+            AST => AST (abstract syntax tree)
+                https://pt.slideshare.net/johanandren/macros-and-reflection-in-scala-210
+            program at compile time
+                add type safety (e.g.: validate string literal at compile time)
+                add performance (e.g.: assertion, logging, ...)
+
 	core concepts
 		HList, Generic
 	 	Coproduct, ADTs
@@ -18,6 +27,10 @@ shapeless
 		summon Generic
 		Generic.Aux[T, Gen]
 	debugging
+
+	exercise
+	    csv
+	        https://meta.plasm.us/posts/2015/11/08/type-classes-and-generic-derivation/
 
 	boring details
 		dependent types

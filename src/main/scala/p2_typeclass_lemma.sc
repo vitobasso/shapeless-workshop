@@ -64,11 +64,8 @@ implicit def personExample2(implicit
   val p: Person = gen.from(hlist)
   Example.instance(p)
 }
-//to debug, break down to parts
+//to debug, break down into parts
 Example[Person].apply
   Example[String]
   Example[Int]
   Generic[Person]
-
-
-
