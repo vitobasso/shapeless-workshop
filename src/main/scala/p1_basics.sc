@@ -52,7 +52,6 @@ val e2: Blo = Right("bla")
 sealed trait Shape
 case class Rectangle(width: Double, height: Double) extends Shape
 case class Circle(radius: Double) extends Shape
-val rect: Shape = Rectangle(3.0, 4.0)
-val circ: Shape = Circle(1.0)
-val r2 = Generic[Shape].to(rect)
-val r3: Circle :+: Rectangle :+: CNil = r2
+val genShape = Generic[Shape]
+genShape.to(Rectangle(3.0, 4.0))
+genShape.to(Circle(1.0))
