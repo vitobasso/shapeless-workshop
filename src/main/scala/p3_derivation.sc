@@ -50,10 +50,10 @@ def hlistExample[Head, Tail <: HList]: Example[Head :: Tail] = ???
  */
 implicit def hnilExample: Example[HNil] = Example.instance(HNil) //base case for the recursion
 implicit def hlistExample1[Head, Tail <: HList](implicit
-                                          head: Lazy[Example[Head]],  //some Example we've defined before: String, Int, ...
-                                          tail: Example[Tail]   //recursion. last is HNil
-                                         ): Example[Head :: Tail] = {
-  val h: Head = head.value.apply
+        head: Example[Head],   //some Example we've defined before: String, Int, ...
+        tail: Example[Tail]    //recursion. last is HNil
+       ): Example[Head :: Tail] = {
+  val h: Head = head.apply
   val t: Tail = tail.apply
   Example.instance(h :: t)
 }
@@ -63,21 +63,26 @@ Example[Int :: String :: HNil].apply
     Example[String]
     Example[HNil]
 
-
 implicit def caseClassExample2[A, Gen <: HList](implicit
-                              e: Lazy[Example[Gen]],   //we've just defined
-                              gen: Generic.Aux[A, Gen] //shapeless creates for us
-                             ): Example[A] = {
+        //*order matters*
+        gen: Generic.Aux[A, Gen], //shapeless creates for us.
+        e: Lazy[Example[Gen]]     //we've just defined  *lazy needed*
+       ): Example[A] = {
   val hlist: Gen = e.value.apply
   val a: A = gen.from(hlist)
   Example.instance(a)
 }
 
 case class Person(name: String, age: Int)
-Example[Person]
+Example[Person].apply
   Generic[Person]
   Example[String :: Int :: HNil].apply
 
+implicit val bool: Example[Boolean] = Example.instance(true)
+case class IceCream(flavor: String, numScopes: Int, hasChocolate: Boolean)
+Example[IceCream].apply
+case class Castle(hasTowers: Boolean, king: Person, typicalIceCream: IceCream)
+Example[Castle].apply
 
 
 
