@@ -66,7 +66,7 @@ Example[Int :: String :: HNil].apply
 implicit def caseClassExample2[A, Gen <: HList](implicit
         //*order matters*
         gen: Generic.Aux[A, Gen], //shapeless creates for us.
-        e: Lazy[Example[Gen]]     //we've just defined  *lazy needed*
+        e: Lazy[Example[Gen]]     //we've just defined Example[HList] *lazy needed*
        ): Example[A] = {
   val hlist: Gen = e.value.apply
   val a: A = gen.from(hlist)
@@ -79,7 +79,7 @@ Example[Person].apply
   Example[String :: Int :: HNil].apply
 
 implicit val bool: Example[Boolean] = Example.instance(true)
-case class IceCream(flavor: String, numScopes: Int, hasChocolate: Boolean)
+case class IceCream(flavor: String, numCherries: Int, hasChocolateSauce: Boolean)
 Example[IceCream].apply
 case class Castle(hasTowers: Boolean, king: Person, typicalIceCream: IceCream)
 Example[Castle].apply

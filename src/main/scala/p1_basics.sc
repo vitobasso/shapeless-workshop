@@ -12,12 +12,12 @@ val t = (1, "bla")
 //generic
 case class Person(name: String, age: Int)
 val p = Person("Victor", 32)
-val gen = Generic[Person]
-val r = gen.to(p)
+val genP = Generic[Person]
+val pRepr = genP.to(p)
 
 case class IceCream(flavor: String, numCherries: Int)
-val gen2 = Generic[IceCream]
-gen2.from(r)
+val genI = Generic[IceCream]
+genI.from(pRepr)
 
 
 //coproduct

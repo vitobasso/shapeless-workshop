@@ -57,6 +57,7 @@ implicit def personExample2(implicit
                            int: Example[Int],
                            gen: Generic.Aux[Person, GenPerson]
                           ): Example[Person] = {
+  // "proof"
   val s: String = str.apply
   val i: Int    = int.apply
   val hlist: GenPerson = s :: i :: HNil
