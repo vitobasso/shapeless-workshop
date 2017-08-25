@@ -12,12 +12,13 @@ val t = (1, "bla")
 //generic
 case class Person(name: String, age: Int)
 val p = Person("Victor", 32)
+type G = String :: Int :: HNil
 val genP = Generic[Person]
-val pRepr = genP.to(p)
+val pRepr: G = genP.to(p)
 
 case class IceCream(flavor: String, numCherries: Int)
 val genI = Generic[IceCream]
-genI.from(pRepr)
+val i: IceCream = genI.from(pRepr)
 
 
 //coproduct
@@ -38,7 +39,7 @@ val e2: Blo = Right("bla")
        Person(name: String, age: Int)
        String :: Int :: HNil
 
-   coproduct, aka sum type, disjoint union, variant type
+   coproduct, aka sum type, disjoint union
    "or"
        Either[String, Int]
        sealed trait Shape

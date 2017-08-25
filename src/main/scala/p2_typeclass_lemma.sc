@@ -21,11 +21,31 @@ object Example {
 
 }
 
+// ???
+def example[A](implicit e: Example[A]): A = e.apply
+
+
 //type class instances
 implicit val strExample: Example[String] = Example.instance("bla")
 implicit val intExample: Example[Int] = Example.instance(1)
 Example[String].apply
 Example[Int].apply
+
+
+//it's all just sugar
+
+//summoner
+Example[Int]
+implicitly[Example[Int]]
+
+//constructor
+Example.instance(1)
+new Example[Int]{ override def apply = 1 }
+
+//???
+example[Int]
+Example[Int].apply
+
 
 
 //Example[Person] ?
