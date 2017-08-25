@@ -1,51 +1,19 @@
 import shapeless._
 
-//dependency from previous worksheet
+//dependencies from previous worksheet
 case class Person(name: String, age: Int)
-
-
-//type class
 trait Example[A] {
-  def apply: A
+  def get: A
 }
-
 object Example {
-
-  //summoner
   def apply[A](implicit e: Example[A]): Example[A] = e
-
-  //constructor
   def instance[A](v: A): Example[A] = new Example[A] {
-    override def apply: A = v
+    override def get: A = v
   }
-
 }
-
-// ???
-def example[A](implicit e: Example[A]): A = e.apply
-
-
-//type class instances
+def example[A](implicit e: Example[A]): A = e.get
 implicit val strExample: Example[String] = Example.instance("bla")
 implicit val intExample: Example[Int] = Example.instance(1)
-Example[String].apply
-Example[Int].apply
-
-
-//it's all just sugar
-
-//summoner
-Example[Int]
-implicitly[Example[Int]]
-
-//constructor
-Example.instance(1)
-new Example[Int]{ override def apply = 1 }
-
-//???
-example[Int]
-Example[Int].apply
-
 
 
 //Example[Person] ?
@@ -78,14 +46,19 @@ implicit def personExample2(implicit
                            gen: Generic.Aux[Person, GenPerson]
                           ): Example[Person] = {
   // "proof"
-  val s: String = str.apply
-  val i: Int    = int.apply
+  val s: String = str.get
+  val i: Int    = int.get
   val hlist: GenPerson = s :: i :: HNil
   val p: Person = gen.from(hlist)
   Example.instance(p)
 }
+
 //to debug, break down into parts
-Example[Person].apply
+Example[Person]
+  Generic[Person]
   Example[String]
   Example[Int]
-  Generic[Person]
+
+
+//it works!
+example[Person]

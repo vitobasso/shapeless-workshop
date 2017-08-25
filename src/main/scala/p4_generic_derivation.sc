@@ -1,20 +1,21 @@
 import shapeless._
 
 //dependencies from previous worksheet
+case class Person(name: String, age: Int)
 trait Example[A] {
-  def apply: A
+  def get: A
 }
 object Example {
   def apply[A](implicit e: Example[A]): Example[A] = e
   def instance[A](v: A): Example[A] = new Example[A] {
-    override def apply: A = v
+    override def get: A = v
   }
 }
+def example[A](implicit e: Example[A]): A = e.get
 implicit val strExample: Example[String] = Example.instance("bla")
 implicit val intExample: Example[Int] = Example.instance(1)
 
 
-//generic type class derivation
 //Example[A] ?
 def caseClassExample[A]: Example[A] = ???
 /* idea: given the parts, build the whole
@@ -54,11 +55,11 @@ implicit def hlistExample1[Head, Tail <: HList](implicit
         head: Example[Head],   //some Example we've defined before: String, Int, ...
         tail: Example[Tail]    //recursion. last is HNil
        ): Example[Head :: Tail] = {
-  val h: Head = head.apply
-  val t: Tail = tail.apply
+  val h: Head = head.get
+  val t: Tail = tail.get
   Example.instance(h :: t)
 }
-Example[Int :: String :: HNil].apply
+Example[Int :: String :: HNil].get
   Example[Int]
   Example[String :: HNil]
     Example[String]
@@ -70,21 +71,27 @@ implicit def caseClassExample2[A, Gen <: HList](implicit
         e: Lazy[Example[Gen]]     //we've just defined Example[HList]
                                   // *lazy needed so compiler doesn't give up the implicit search on complex cases*
        ): Example[A] = {
-  val hlist: Gen = e.value.apply
+  val hlist: Gen = e.value.get
   val a: A = gen.from(hlist)
   Example.instance(a)
 }
 
-case class Person(name: String, age: Int)
-Example[Person].apply
-  Generic[Person]
-  Example[String :: Int :: HNil].apply
 
+//debug
+Example[Person].get
+  Generic[Person]
+  Example[String :: Int :: HNil]
+    Example[String]
+    Example[Int]
+    Example[HNil]
+
+
+//it works!
 implicit val bool: Example[Boolean] = Example.instance(true)
 case class IceCream(flavor: String, numCherries: Int, hasChocolateSauce: Boolean)
-Example[IceCream].apply
-case class Castle(hasTowers: Boolean, king: Person, typicalIceCream: IceCream)
-Example[Castle].apply
+example[IceCream]
+case class Gelateria(owner: Person, iceCream: IceCream, isOpen: Boolean)
+example[Gelateria]
 
 
 
