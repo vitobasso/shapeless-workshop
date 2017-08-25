@@ -25,6 +25,7 @@ def caseClassExample[A]: Example[A] = ???
 
    we need:
       Example[HList]
+         Example[HNil]
          Example[String]
          Example[Int]
          Example[...]
@@ -90,6 +91,7 @@ Example[Person].get
 implicit val bool: Example[Boolean] = Example.instance(true)
 case class IceCream(flavor: String, numCherries: Int, hasChocolateSauce: Boolean)
 example[IceCream]
+//*the next one only works with Lazy
 case class Gelateria(owner: Person, iceCream: IceCream, isOpen: Boolean)
 example[Gelateria]
 
