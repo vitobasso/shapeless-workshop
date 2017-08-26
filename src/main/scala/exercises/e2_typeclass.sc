@@ -21,15 +21,15 @@ object EncodeCsv {
 }
 def encode[A](a: A)(implicit e: EncodeCsv[A]): List[String] = e.encode(a)
 
-implicit val int: EncodeCsv[Int] = EncodeCsv.instance{
+implicit val int: EncodeCsv[Int] = EncodeCsv.instance {
   v: Int => List(v.toString)
 }
 
-implicit val string: EncodeCsv[String] = EncodeCsv.instance{
+implicit val string: EncodeCsv[String] = EncodeCsv.instance {
   v: String => List(v)
 }
 
-implicit val bool: EncodeCsv[Boolean] = EncodeCsv.instance{
+implicit val bool: EncodeCsv[Boolean] = EncodeCsv.instance {
   v: Boolean => List(if(v) "yes" else "no")
 }
 

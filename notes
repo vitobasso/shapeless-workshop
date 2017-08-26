@@ -1,6 +1,3 @@
-Harry Laoulakos
-    check Edoardo Vacchi: https://vimeo.com/171939792
-
 
 shapeless
 	intro
@@ -11,7 +8,7 @@ shapeless
 		    is a type class and dependent type based generic programming library
 		    helps you abstract over arities, scrape boilerplate
 		often libs do the job for you. e.g.: circe, finch
-		programming at type level
+		programming at type level (program "runs" at compile time)
             generic type class derivation
 		    ifs, loops, Nat
             	http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/
@@ -28,7 +25,6 @@ shapeless
 	 	Coproduct, ADTs
 	putting in practice
 		type classes
-		summon Generic
 		Generic.Aux[T, Gen]
 	debugging
 
@@ -39,6 +35,7 @@ shapeless
 	boring details
 		dependent types
 		Lazy
+		Aux
 
 	more
 		LabelledGeneric, json
@@ -47,3 +44,6 @@ shapeless
 		Nat
 		ifs, loops, compile-time logic
 			http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/
+        prolog
+            George Leontiev:    https://www.youtube.com/watch?v=iYCR2wzfdUs
+            Edoardo Vacchi:     https://vimeo.com/171939792
