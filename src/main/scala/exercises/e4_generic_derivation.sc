@@ -1,7 +1,7 @@
 import shapeless._
 
 /*
-  4. derive EncodeCsv[Cat]
+  4. derive EncodeCsv[A]
   remember: given the parts, build the whole
       String
          Int    ->    HList     ->        A
@@ -39,4 +39,23 @@ def encode[A](a: A)(implicit e: EncodeCsv[A]): List[String] = e.encode(a)
 
 //answer
 
+implicit def hnil: EncodeCsv[HNil] = EncodeCsv.instance {
+  _: HNil => Nil
+}
+implicit def hlist[H, T <: HList](implicit
+                                  encodeHead: EncodeCsv[H],
+                                  encodeTail: EncodeCsv[T]
+                                  ): EncodeCsv[H :: T] = EncodeCsv.instance[H :: T] {
+  v: (H :: T) => encodeHead.encode(v.head) ++ encodeTail.encode(v.tail)
+}
+implicit def caseClass[A,H](implicit
+                          generic: Generic.Aux[A,H],
+                          encodeHlist: EncodeCsv[H]
+                         ): EncodeCsv[A] = EncodeCsv.instance {
+  v: A =>
+    val g = generic.to(v)
+    encodeHlist.encode(g)
+}
 
+val c = Cat("bla", 7, false)
+encode(c)
