@@ -7,11 +7,18 @@ shapeless
 		shapeless
 		    is a type class and dependent type based generic programming library
 		    helps you abstract over arities, scrape boilerplate
-		often libs do the job for you. e.g.: circe, finch
-		programming at type level (program "runs" at compile time)
+		    TLP= type level programming
+
+		TLP= type level programming (computations at compile time)
             generic type class derivation
 		    ifs, loops, Nat
-            	http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/
+		    compute types
+		    often libs do the job for you. e.g.: circe, finch, slick
+
+        dependent types
+                    http://gigiigig.github.io/tlp-step-by-step/introduction.html (dependent types, aux)
+                    http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/   (ifs, loops, compile-time logic)
+
         macros (used by shapeless under the hood)
             compile time reflection
             AST => AST (abstract syntax tree)
@@ -32,18 +39,12 @@ shapeless
 	    csv
 	        https://meta.plasm.us/posts/2015/11/08/type-classes-and-generic-derivation/
 
-	boring details
-		dependent types
-		Lazy
-		Aux
-
 	more
 		LabelledGeneric, json
 		type classes for operations on HLists & Coproducts
-		Poly
-		Nat
-		ifs, loops, compile-time logic
-			http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/
+		Lazy, Aux, Poly, Nat
+
+
         prolog
             George Leontiev:    https://www.youtube.com/watch?v=iYCR2wzfdUs
             Edoardo Vacchi:     https://vimeo.com/171939792
