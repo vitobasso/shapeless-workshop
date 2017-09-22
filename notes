@@ -4,20 +4,31 @@ shapeless
 		the type astronaut's guide to shapeless
 			https://github.com/underscoreio/shapeless-guide
 
-		shapeless
-		    is a type class and dependent type based generic programming library
-		    helps you abstract over arities, scrape boilerplate
-		    TLP= type level programming
+		what shapeless is
+		    according to github repo
+                generic programming
+                is a type class and dependent type based generic programming library
+                helps you abstract over arities, scrape boilerplate
+
+        libs using shapeless
+            circe
+                Encoder and Decoder derivation
+            finch
+                endpoint composition, :: and :+:
+            slick
+                type safe db queries
 
 		TLP= type level programming (computations at compile time)
             generic type class derivation
 		    ifs, loops, Nat
 		    compute types
-		    often libs do the job for you. e.g.: circe, finch, slick
+
+            http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/   (ifs, loops, compile-time logic)
+            http://www.michaelpollmeier.com/presentations/2013-11-28-typelevel-programming-scala/#/ (ifs, nat)
+            http://slick.lightbend.com/talks/scalaio2014/Type-Level_Computations.pdf (syntax translation value => type, ifs, nat, operations)
 
         dependent types
-                    http://gigiigig.github.io/tlp-step-by-step/introduction.html (dependent types, aux)
-                    http://wheaties.github.io/Presentations/Scala-Dep-Types/dependent-types.html#/   (ifs, loops, compile-time logic)
+            http://gigiigig.github.io/tlp-step-by-step/introduction.html (dependent types, aux)
 
         macros (used by shapeless under the hood)
             compile time reflection
@@ -26,6 +37,8 @@ shapeless
             program at compile time
                 add type safety (e.g.: validate string literal at compile time)
                 add performance (e.g.: assertion, logging, ...)
+            macro vs shapeless
+                https://github.com/davegurnell/macros-vs-shapeless
 
 	core concepts
 		HList, Generic

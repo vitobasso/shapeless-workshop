@@ -22,17 +22,7 @@ val pRepr: G2 = genP.to(p)
 
 case class IceCream(flavor: String, numCherries: Int)
 val genI = Generic[IceCream]
-val i: IceCream = genI.from(pRepr)
-
-
-//coproduct
-type C = Int :+: String :+: CNil
-val c1: C = Inl(1)
-val c2: C = Inr(Inl("bla"))
-
-type E = Either[Int, String]
-val e1: E = Left(1)
-val e2: E = Right("bla")
+val i: IceCream = genI.from(pRepr) //intellij is confused, but it compiles
 
 
 /* ADT = algebraic data type (not to be confused with "abstract data type")
@@ -51,6 +41,16 @@ val e2: E = Right("bla")
           case class Rectangle(radius: Double) extends Shape
        String :+: Int :+: CNil
  */
+
+
+//coproduct
+type C = Int :+: String :+: CNil
+val c1: C = Inl(1)
+val c2: C = Inr(Inl("bla"))
+
+type E = Either[Int, String]
+val e1: E = Left(1)
+val e2: E = Right("bla")
 
 
 //generic with coproducts

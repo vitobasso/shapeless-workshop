@@ -22,11 +22,11 @@ object Example {
 
 }
 
-// ???
+//syntax
 def example[A](implicit e: Example[A]): A = e.get
 
 
-//it's all just sugar
+//it's all just sugar for:
 
 //summoner
 Example[Int]
@@ -36,7 +36,7 @@ implicitly[Example[Int]]
 Example.instance(1)
 new Example[Int]{ override def get = 1 }
 
-//???
+//syntax
 example[Int]
 Example[Int].get
 
