@@ -36,11 +36,7 @@ def personExample1(implicit
                     gen: Generic[Person]  // shapeless creates for us
                   ): Example[Person] = ???
 //          lemma pattern ^
-/* Wikipedia
-      Lemma:
-      A "helping theorem" is a proved proposition which is used as a stepping stone to a larger result rather than as a statement of interest by itself.
-      The word derives from the Ancient Greek λῆμμα ("anything which is received, such as a gift, profit, or a bribe").
- */
+
 type GenPerson = String :: Int :: HNil
 implicit def personExample2(implicit
                            str: Example[String],
