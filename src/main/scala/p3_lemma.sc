@@ -15,6 +15,8 @@ def example[A](implicit e: Example[A]): A = e.get
 implicit val strExample: Example[String] = Example.instance("bla")
 implicit val intExample: Example[Int] = Example.instance(1)
 
+//goal:
+//example[Person]
 
 //Example[Person] ?
 def personExample: Example[Person] = ???
