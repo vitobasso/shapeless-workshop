@@ -1,16 +1,25 @@
 
 
 //dependent types
-trait DepValue {
+trait Dep {
   type V
   val value: V
 }
-def magic(that: DepValue): that.V = that.value
-def mk[T](x: T) = new DepValue {
+def mk[T](x: T) = new Dep {
   type V = T
   val value = x
 }
-val depInt = mk(1)
-val depString = mk("two")
-val itWorks: Int = magic(depInt)
+val depInt: Dep { type V = Int } = mk(1)
+val depString: Dep { type V = String } = mk("two")
+
+def magic(dep: Dep): dep.V = dep.value
+val iKnowTheType: Int = magic(depInt)
 val again: String = magic(depString)
+
+
+//aux
+object Dep {
+  type Aux[V0] = Dep{ type V = V0 }
+}
+val depInt2: Dep.Aux[Int] = mk(1)
+val depString2: Dep.Aux[String] = mk("two")

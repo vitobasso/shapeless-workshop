@@ -31,4 +31,4 @@ implicit val stringWriter: Writes[String] =
 
 //derivation
 val personWriter: Writes[Person] = generateWriter[Person] //compiles
-val aeroplaneWriter: Writes[Aeroplane] = generateWriter[Aeroplane] //does not compiles
+val aeroplaneWriter: Writes[Aeroplane] = generateWriter[Aeroplane] //does not compile
