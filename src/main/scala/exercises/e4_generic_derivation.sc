@@ -2,17 +2,17 @@ import shapeless._
 
 /*
   4. derive EncodeCsv[A]
-  remember: given the parts, build the whole
+
       String
          Int    ->    HList     ->        A
         (...)                 Generic
 
    we need:
-      Example[HList]
-         Example[HNil]
-         Example[String]
-         Example[Int]
-         Example[...]
+      EncodeCsv[HList]
+         EncodeCsv[HNil]
+         EncodeCsv[String]
+         EncodeCsv[Int]
+         EncodeCsv[...]
       Generic[A]
  */
 case class Cat(name: String, livesLeft: Int, female: Boolean)

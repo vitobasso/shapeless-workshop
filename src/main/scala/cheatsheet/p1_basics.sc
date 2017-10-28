@@ -25,24 +25,6 @@ val genI = Generic[IceCream]
 val i: IceCream = genI.from(pRepr) //intellij is confused, but it compiles
 
 
-/* ADT = algebraic data type (not to be confused with "abstract data type")
-
-   product, aka tuple, record
-   "and"
-       (String, Int)
-       Person(name: String, age: Int)
-       String :: Int :: HNil
-
-   coproduct, aka sum type, disjoint union
-   "or"
-       Either[String, Int]
-       sealed trait Shape
-          case class Circle(width: Double, height: Double) extends Shape
-          case class Rectangle(radius: Double) extends Shape
-       String :+: Int :+: CNil
- */
-
-
 //coproduct
 type C = Int :+: String :+: CNil
 val c1: C = Inl(1)

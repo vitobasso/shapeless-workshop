@@ -4,7 +4,7 @@ import shapeless._
   3. derive EncodeCsv[Cat] from basic instances + generic (lemma pattern)
 
       String
-         Int    ->    HList     ->        Person
+         Int    ->    HList     ->        Cat
      Boolean                  Generic
  */
 case class Cat(name: String, livesLeft: Int, female: Boolean)
