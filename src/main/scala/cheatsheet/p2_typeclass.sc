@@ -1,8 +1,3 @@
-import shapeless._
-
-//dependency from previous worksheet
-case class Person(name: String, age: Int)
-
 
 //type class
 trait Example[A] {
@@ -49,3 +44,8 @@ implicit val intExample: Example[Int] = Example.instance(1)
 //it works!
 example[String]
 example[Int]
+
+
+//in the standard scala lib
+List(1,2,3).sum
+//List("a", "b", "c").sum // doesn't compile
