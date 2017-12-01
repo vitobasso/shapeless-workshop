@@ -1,49 +1,49 @@
 
 //type class
-trait Example[A] {
+trait SampleInstance[A] {
   def get: A
 }
 
-object Example {
+object SampleInstance {
 
   //summoner
-  def apply[A](implicit e: Example[A]): Example[A] = e
+  def apply[A](implicit e: SampleInstance[A]): SampleInstance[A] = e
 
   //constructor
   //  a.k.a pure
-  def instance[A](v: A): Example[A] = new Example[A] {
+  def instance[A](v: A): SampleInstance[A] = new SampleInstance[A] {
     override def get: A = v
   }
 
 }
 
 //syntax
-def example[A](implicit e: Example[A]): A = e.get
+def sample[A](implicit e: SampleInstance[A]): A = e.get
 
 
 //it's all just sugar for:
 
 //summoner
-Example[Int]
-implicitly[Example[Int]]
+SampleInstance[Int]
+implicitly[SampleInstance[Int]]
 
 //constructor
-Example.instance(1)
-new Example[Int]{ override def get = 1 }
+SampleInstance.instance(1)
+new SampleInstance[Int]{ override def get = 1 }
 
 //syntax
-example[Int]
-Example[Int].get
+sample[Int]
+SampleInstance[Int].get
 
 
 //type class instances
-implicit val strExample: Example[String] = Example.instance("bla")
-implicit val intExample: Example[Int] = Example.instance(1)
+implicit val strInstance: SampleInstance[String] = SampleInstance.instance("bla")
+implicit val intInstance: SampleInstance[Int] = SampleInstance.instance(1)
 
 
 //it works!
-example[String]
-example[Int]
+sample[String]
+sample[Int]
 
 
 //in the standard scala lib

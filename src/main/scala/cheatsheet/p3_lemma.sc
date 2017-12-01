@@ -2,61 +2,61 @@ import shapeless._
 
 //dependencies from previous worksheet
 case class Person(name: String, age: Int)
-trait Example[A] {
+trait SampleInstance[A] {
   def get: A
 }
-object Example {
-  def apply[A](implicit e: Example[A]): Example[A] = e
-  def instance[A](v: A): Example[A] = new Example[A] {
+object SampleInstance {
+  def apply[A](implicit e: SampleInstance[A]): SampleInstance[A] = e
+  def instance[A](v: A): SampleInstance[A] = new SampleInstance[A] {
     override def get: A = v
   }
 }
-def example[A](implicit e: Example[A]): A = e.get
-implicit val strExample: Example[String] = Example.instance("bla")
-implicit val intExample: Example[Int] = Example.instance(1)
+def sample[A](implicit e: SampleInstance[A]): A = e.get
+implicit val strSampleInstance: SampleInstance[String] = SampleInstance.instance("bla")
+implicit val intSampleInstance: SampleInstance[Int] = SampleInstance.instance(1)
 
 //goal:
-//example[Person]
+//sample[Person]
 
-//Example[Person] ?
-def personExample: Example[Person] = ???
+//SampleInstance[Person] ?
+def personSampleInstance0: SampleInstance[Person] = ???
 /* idea: given the parts, build the whole
       String
                 ->    String :: Int     ->        Person
          Int                          Generic
 
    we need:
-      Example[String]
-      Example[Int]
+      SampleInstance[String]
+      SampleInstance[Int]
       Generic[Person]
  */
-def personExample1(implicit
-                    str: Example[String], // we've defined before
-                    int: Example[Int],    // we've defined before
+def personSampleInstance1(implicit
+                    str: SampleInstance[String], // we've defined before
+                    int: SampleInstance[Int],    // we've defined before
                     gen: Generic[Person]  // shapeless creates for us
-                  ): Example[Person] = ???
+                  ): SampleInstance[Person] = ???
 //          lemma pattern ^
 
 type GenPerson = String :: Int :: HNil
-implicit def personExample2(implicit
-                           str: Example[String],
-                           int: Example[Int],
+implicit def personSampleInstance(implicit
+                           str: SampleInstance[String],
+                           int: SampleInstance[Int],
                            gen: Generic.Aux[Person, GenPerson]
-                          ): Example[Person] = {
+                          ): SampleInstance[Person] = {
   // "proof"
   val s: String = str.get
   val i: Int    = int.get
   val hlist: GenPerson = s :: i :: HNil
   val p: Person = gen.from(hlist)
-  Example.instance(p)
+  SampleInstance.instance(p)
 }
 
 //to debug, break down into parts
-Example[Person]
+SampleInstance[Person]
   Generic[Person]
-  Example[String]
-  Example[Int]
+  SampleInstance[String]
+  SampleInstance[Int]
 
 
 //it works!
-example[Person]
+sample[Person]
