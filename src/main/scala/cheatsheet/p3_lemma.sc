@@ -15,21 +15,44 @@ def sample[A](implicit e: SampleInstance[A]): A = e.get
 implicit val strSampleInstance: SampleInstance[String] = SampleInstance.instance("bla")
 implicit val intSampleInstance: SampleInstance[Int] = SampleInstance.instance(1)
 
-//goal:
-//sample[Person]
+/*
+  derive SampleInstance[Person] from what we have:
+    - SampleInstance[String]
+    - SampleInstance[Int]
+    - Generic[Person]
+
+  goal: sample[Person] == Person(bla,1)
+ */
 
 //SampleInstance[Person] ?
-def personSampleInstance0: SampleInstance[Person] = ???
-/* idea: given the parts, build the whole
-      String
-                ->    String :: Int     ->        Person
-         Int                          Generic
+def personSampleInstance: SampleInstance[Person] = ???
 
-   we need:
-      SampleInstance[String]
-      SampleInstance[Int]
-      Generic[Person]
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def personSampleInstance1(implicit
                     str: SampleInstance[String], // we've defined before
                     int: SampleInstance[Int],    // we've defined before
@@ -37,8 +60,16 @@ def personSampleInstance1(implicit
                   ): SampleInstance[Person] = ???
 //          lemma pattern ^
 
+
+
+
+
+
+
+
+
 type GenPerson = String :: Int :: HNil
-implicit def personSampleInstance(implicit
+implicit def personSampleInstance2(implicit
                            str: SampleInstance[String],
                            int: SampleInstance[Int],
                            gen: Generic.Aux[Person, GenPerson]

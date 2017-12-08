@@ -1,19 +1,25 @@
 import shapeless._
 
 /*
-  4. derive EncodeCsv[A]
+  4. derive EncodeCsv[A] from smaller parts, for any A
 
       String
          Int    ->    HList     ->        A
         (...)                 Generic
 
-   we need:
+   we'll need:
       EncodeCsv[HList]
          EncodeCsv[HNil]
          EncodeCsv[String]
          EncodeCsv[Int]
          EncodeCsv[...]
       Generic[A]
+
+   goal:
+      encode(cat) == List(Gatarys, 7, yes)
+      encode(person) == ...
+      encode(aeroplane) == ...
+      ...
  */
 case class Cat(name: String, livesLeft: Int, female: Boolean)
 trait EncodeCsv[A] {

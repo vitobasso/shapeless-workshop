@@ -1,11 +1,19 @@
 import shapeless._
 
 /*
-  3. derive EncodeCsv[Cat] from basic instances + generic (lemma pattern)
+  3. derive EncodeCsv[Cat] smaller parts:
+    - EncodeCsv[String]
+    - EncodeCsv[Int]
+    - EncodeCsv[Boolean]
+    - Generic[Person]
 
       String
          Int    ->    HList     ->        Cat
      Boolean                  Generic
+
+    goal:
+      val cat = Cat("Gatarys", 7, true)
+      encode(cat) == List(Gatarys, 7, yes)
  */
 case class Cat(name: String, livesLeft: Int, female: Boolean)
 trait EncodeCsv[A] {
