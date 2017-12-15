@@ -1,6 +1,7 @@
 import shapeless._
 import shapeless.ops.hlist._
 
+//operations on HList
 val hlist = Seq.empty[Int] :: "bla" :: true :: 123 :: HNil
 hlist.head
 hlist.tail

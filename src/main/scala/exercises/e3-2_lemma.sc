@@ -1,6 +1,7 @@
 import shapeless._
 import shapeless.ops.hlist._
 
+//more operations on HList
 val hlist = Seq.empty[Int] :: "bla" :: true :: "ble" :: 123 :: HNil
 hlist.filter[String]
 hlist.reverse
