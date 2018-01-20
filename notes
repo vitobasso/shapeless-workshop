@@ -1,4 +1,9 @@
 
+other shapeless presentations
+    https://www.youtube.com/watch?v=JKaCCYZYBWo
+        https://gist.github.com/vil1/29f2d155679c703edfbe402f067962f6
+
+
 shapeless
 	intro
 		the type astronaut's guide to shapeless
@@ -15,7 +20,9 @@ shapeless
                 Encoder and Decoder derivation
             finch
                 endpoint composition, :: and :+:
-            slick
+            refined
+                stricter types
+            slickless (for slick)
                 type safe db queries
 
 		TLP= type level programming (computations at compile time)
