@@ -24,6 +24,7 @@ shapeless
                 stricter types
             slickless (for slick)
                 type safe db queries
+            scalacheck-shapeless
 
 		TLP= type level programming (computations at compile time)
             generic type class derivation
