@@ -26,10 +26,6 @@ object Penultimate {
   type Aux[L, O] = Penultimate[L] { type Out = O }
 }
 
-implicit class CustomHListOps[L <: HList](hlist: L) {
-  def penultimate[A](implicit p: Penultimate.Aux[L, A]): A = p.apply(hlist)
-}
-
 implicit def hlistPenultimate[L <: HList, M <: HList, O](implicit
                                                          init: Init.Aux[L, M],
                                                          last: Last.Aux[M, O]
@@ -40,6 +36,10 @@ implicit def hlistPenultimate[L <: HList, M <: HList, O](implicit
       last(init(hlist))
   }
 
+
+implicit class CustomHListOps[L <: HList](hlist: L) {
+  def penultimate[A](implicit p: Penultimate.Aux[L, A]): A = p.apply(hlist)
+}
 
 //it works!
 hlist.penultimate
