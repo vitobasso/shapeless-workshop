@@ -41,9 +41,14 @@ cats.Semigroup[Int]
 import shapeless._
 import shapeless.ops.hlist._
 
-Last[Int :: String ::HNil]
-(1 :: "bla" :: HNil).last
+type HList1 = Int :: String :: HNil
+val hlist1 = 1 :: "bla" :: HNil
+Last[HList1]
+hlist1.last
 
-type H = String :: Int :: String :: Int :: HNil
-Filter[H, Int]
-(1 :: "bla" :: 2 :: "ble" :: HNil).filter[Int]
+type HList2 = String :: Int :: String :: Int :: HNil
+val hlist2 = 1 :: "bla" :: 2 :: "ble" :: HNil
+Filter[HList2, Int]
+hlist2.filter[Int]
+hlist2.filter[String]
+hlist2.filter[Boolean]
