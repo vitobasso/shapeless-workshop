@@ -31,5 +31,6 @@ object CanParse {
 }
 
 //using the summoner
-CanParse[RGB].parse("123456")
+val instance = CanParse[RGB]
+instance.parse("123456")
 

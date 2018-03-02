@@ -30,3 +30,12 @@ def default[A](implicit d: Default[A]): A = d.value
 default[Int]
 default[String]
 default[Boolean]
+
+
+
+//adding new types separately
+case class Cat(name: String, livesLeft: Int)
+implicit val defaultCat = new Default[Cat] {
+  override def value = Cat(default[String], default[Int])
+}
+default[Cat]

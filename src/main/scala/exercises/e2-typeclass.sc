@@ -8,16 +8,16 @@
           String
           Boolean
             - shows "yes" or "no"
-          Person(name: String, age: Int)
-            - shows like "John Doe, 32"
+          Cat(name: String, livesLeft: Int)
+            - shows like "Gatarys, 7"
 
     3.  create syntax sugar so you can do:
           123.show == "123
-          Person("John Doe", 32).show == "John Doe, 32"
+          Cat("Gatarys", 7).show == "Gatarys, 7"
 
  */
 
-case class Person(name: String, age: Int)
+case class Cat(name: String, livesLeft: Int)
 
 trait Show[A] {
   def show(a: A): String
@@ -32,8 +32,8 @@ object Show {
   implicit val boolean = new Show[Boolean] {
     override def show(a: Boolean) = if(a) "yes" else "no"
   }
-  implicit val person = new Show[Person] {
-    override def show(a: Person) = s"${a.name}, ${a.age}"
+  implicit val cat = new Show[Cat] {
+    override def show(a: Cat) = s"${a.name}, ${a.livesLeft}"
   }
 }
 
@@ -45,4 +45,4 @@ implicit class ShowOps[A: Show](a: A) {
 123.show
 "bla bla".show
 true.show
-Person("John Doe", 32).show
+Cat("Gatarys", 7).show

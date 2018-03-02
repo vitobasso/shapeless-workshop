@@ -1,5 +1,5 @@
-import scala.util.Try
 import java.util.UUID
+import scala.util.Try
 case class PartyUUID(uuid: java.util.UUID)
 case class RGB(value: Long)
 case class IBAN(value: String)
@@ -51,6 +51,10 @@ def parse[A: CanParse](str: String): Option[A] = implicitly[CanParse[A]].parse(s
 RGB(123).serialize
 parse[PartyUUID]("152f1b99-b6f8-4737-85a0-b232e669c20d")
 parse[RGB]("invalid")
+
+
+
+//creating generic code on top of it
 
 def encrypt[A: CanParse](a: A): String =
   a.serialize.map(Character.reverseBytes)
