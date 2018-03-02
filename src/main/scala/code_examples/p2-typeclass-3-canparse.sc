@@ -15,23 +15,23 @@ object CanParse {
 
   //type class instances
 
-  implicit val canParseInt = new CanParse[Int] {
+  implicit val int = new CanParse[Int] {
     override def serialize(a: Int): String = a.toString
     override def parse(str: String): Option[Int] = Try(str.toInt).toOption
   }
 
-  implicit val canParsePartyUUID = new CanParse[PartyUUID] {
+  implicit val partyUuid = new CanParse[PartyUUID] {
     override def parse(str: String): Option[PartyUUID] =
       Try(UUID.fromString(str)).toOption.map(PartyUUID)
     override def serialize(a: PartyUUID) = a.uuid.toString
   }
 
-  implicit val canParseRGB = new CanParse[RGB] {
+  implicit val rgb = new CanParse[RGB] {
     override def parse(str: String): Option[RGB] = Try(str.toInt).map(RGB(_)).toOption
     override def serialize(a: RGB) = a.value.toString
   }
 
-  implicit val canParseIBAN = new CanParse[IBAN] {
+  implicit val iban = new CanParse[IBAN] {
     override def parse(str: String): Option[IBAN] = Some(IBAN(str))
     override def serialize(a: IBAN) = a.value
   }
