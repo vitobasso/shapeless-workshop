@@ -1,7 +1,7 @@
-import java.util.UUID
 import scala.util.Try
-case class PartyUUID(uuid: java.util.UUID)
-case class RGB(value: Long)
+
+case class UserId(uuid: java.util.UUID)
+case class BSN(value: Long)
 case class IBAN(value: String)
 
 
@@ -16,19 +16,19 @@ object CanParse {
   //type class instances
 
   implicit val int = new CanParse[Int] {
-    override def serialize(a: Int): String = a.toString
     override def parse(str: String): Option[Int] = Try(str.toInt).toOption
+    override def serialize(a: Int): String = a.toString
   }
 
-  implicit val partyUuid = new CanParse[PartyUUID] {
-    override def parse(str: String): Option[PartyUUID] =
-      Try(UUID.fromString(str)).toOption.map(PartyUUID)
-    override def serialize(a: PartyUUID) = a.uuid.toString
+  implicit val userId = new CanParse[UserId] {
+    override def parse(str: String): Option[UserId] =
+      Try(java.util.UUID.fromString(str)).toOption.map(UserId)
+    override def serialize(a: UserId) = a.uuid.toString
   }
 
-  implicit val rgb = new CanParse[RGB] {
-    override def parse(str: String): Option[RGB] = Try(str.toInt).map(RGB(_)).toOption
-    override def serialize(a: RGB) = a.value.toString
+  implicit val bsn = new CanParse[BSN] {
+    override def parse(str: String): Option[BSN] = Try(str.toInt).map(BSN(_)).toOption
+    override def serialize(a: BSN) = a.value.toString
   }
 
   implicit val iban = new CanParse[IBAN] {
@@ -48,9 +48,9 @@ def parse[A: CanParse](str: String): Option[A] = implicitly[CanParse[A]].parse(s
 //usage
 
 123.serialize
-RGB(123).serialize
-parse[PartyUUID]("152f1b99-b6f8-4737-85a0-b232e669c20d")
-parse[RGB]("invalid")
+BSN(123).serialize
+parse[UserId]("152f1b99-b6f8-4737-85a0-b232e669c20d")
+parse[BSN]("invalid")
 
 
 
@@ -61,7 +61,8 @@ def encrypt[A: CanParse](a: A): String =
 def decrypt[A: CanParse](str: String): Option[A] =
   parse[A](str.map(Character.reverseBytes))
 
-val eRgb = encrypt(RGB(123))
+val eBsn = encrypt(BSN(123))
 val eIban = encrypt(IBAN("8709827342"))
-decrypt[RGB](eRgb)
+decrypt[BSN](eBsn)
+decrypt[BSN]("a funny string")
 decrypt[IBAN](eIban)

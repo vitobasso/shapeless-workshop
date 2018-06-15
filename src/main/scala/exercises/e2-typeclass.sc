@@ -12,7 +12,7 @@
             - shows like "Gatarys, 7"
 
     3.  create syntax sugar so you can do:
-          123.show == "123
+          123.show == "123"
           Cat("Gatarys", 7).show == "Gatarys, 7"
 
  */

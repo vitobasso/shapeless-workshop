@@ -1,7 +1,7 @@
-import java.util.UUID
 import scala.util.Try
-case class PartyUUID(uuid: java.util.UUID)
-case class RGB(value: Long)
+
+case class UserId(uuid: java.util.UUID)
+case class BSN(value: Long)
 case class IBAN(value: String)
 
 
@@ -25,12 +25,11 @@ object CanParse {
 
   //type class instances (using the constructor)
   implicit val int = constr[Int](str => Try(str.toInt).toOption, _.toString)
-  implicit val partyUUID = constr[PartyUUID](str => Try(UUID.fromString(str)).toOption.map(PartyUUID), _.uuid.toString)
-  implicit val rgb = constr[RGB](str => Try(str.toInt).map(RGB(_)).toOption, _.value.toString)
+  implicit val userId = constr[UserId](str => Try(java.util.UUID.fromString(str)).toOption.map(UserId), _.uuid.toString)
+  implicit val bsn = constr[BSN](str => Try(str.toInt).map(BSN(_)).toOption, _.value.toString)
   implicit val iban = constr[IBAN](str => Some(IBAN(str)), _.value)
 }
 
 //using the summoner
-val instance = CanParse[RGB]
-instance.parse("123456")
-
+val instance = CanParse[BSN]
+instance.parse("123")
