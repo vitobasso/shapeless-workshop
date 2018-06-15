@@ -10,7 +10,7 @@ hlist.length.toInt
 
 
 /*
-  3. define LastOfType type class by combining:
+  Define LastOfType type class by combining:
       - Partition (filter)
       - Last
 
@@ -29,13 +29,13 @@ hlist.length.toInt
       Rest: output hlist of elements not matching
 
   steps:
-    a. define the type class
-    b. define the companion, with Aux
-    c. define the implicit def (skeleton with ???s)
-    d. include the lemmas: Partition & Last
+    1. define the type class
+    2. define the companion, with Aux
+    3. define the implicit def (skeleton with ???s)
+    4. include the lemmas: Partition & Last
         use their Aux (with ???s as types params)
-    e. place the type params properly (so they restrict between the lemmas)
+    5. place the type params properly (so they restrict between the lemmas)
         implement the proof
-    f. create the syntax sugar
+    6. create the syntax sugar
         show that it works
  */

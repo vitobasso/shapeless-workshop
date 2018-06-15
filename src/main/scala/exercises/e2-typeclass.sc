@@ -11,14 +11,14 @@
           Cat(name: String, livesLeft: Int)
             - shows like "Gatarys, 7"
 
-    3.  create syntax sugar so you can do:
+    3.  create an implicit class to enable:
           123.show == "123"
-          Cat("Gatarys", 7).show == "Gatarys, 7"
 
  */
 
 case class Cat(name: String, livesLeft: Int)
 
+// YOUR CODE GOES HERE
 trait Show[A] {
   def show(a: A): String
 }
@@ -41,8 +41,8 @@ implicit class ShowOps[A: Show](a: A) {
   def show(implicit s: Show[A]): String = s.show(a)
 }
 
-
-123.show
-"bla bla".show
-true.show
-Cat("Gatarys", 7).show
+//goal:
+123.show                // "123"
+"bla bla".show          // "bla bla"
+true.show               // "yes"
+Cat("Gatarys", 7).show  // "Gatarys, 7"
