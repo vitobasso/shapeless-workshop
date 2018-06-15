@@ -1,43 +1,49 @@
-import shapeless._
-
 /*
-  4. derive EncodeCsv[A] from smaller parts, for any A
+  4. derive Show[A] from smaller parts, for any A
 
       String
          Int    ->    HList     ->        A
         (...)                 Generic
 
    we'll need:
-      EncodeCsv[HList]
-         EncodeCsv[HNil]
-         EncodeCsv[String]
-         EncodeCsv[Int]
-         EncodeCsv[...]
+      Show[HList]
+         Show[HNil]
+         Show[String]
+         Show[Int]
+         Show[...]
       Generic[A]
 
    goal:
-      encode(cat) == List(Gatarys, 7, yes)
-      encode(person) == ...
-      encode(aeroplane) == ...
+      show(cat) == "Gatarys, 7, yes"
+      show(person) == ...
+      show(aeroplane) == ...
       ...
  */
-case class Cat(name: String, livesLeft: Int, female: Boolean)
-trait EncodeCsv[A] {
-  def encode(a: A): List[String]
+trait Show[A] {
+  def show(a: A): String
 }
-object EncodeCsv {
-  def apply[A](implicit e: EncodeCsv[A]): EncodeCsv[A] = e
-  def instance[A](f: A => List[String]) = new EncodeCsv[A] {
-    override def encode(a: A): List[String] = f(a)
+object Show {
+  def apply[A](implicit e: Show[A]): Show[A] = e
+  def instance[A](f: A => String) = new Show[A] {
+    override def show(a: A): String = f(a)
   }
 }
-implicit val int: EncodeCsv[Int] = EncodeCsv.instance{
-  v: Int => List(v.toString)
-}
-implicit val string: EncodeCsv[String] = EncodeCsv.instance{
-  v: String => List(v)
-}
-implicit val bool: EncodeCsv[Boolean] = EncodeCsv.instance{
-  v: Boolean => List(if(v) "yes" else "no")
-}
-def encode[A](a: A)(implicit e: EncodeCsv[A]): List[String] = e.encode(a)
+def show[A](a: A)(implicit e: Show[A]): String = e.show(a)
+implicit val int: Show[Int] = Show.instance{ v: Int => v.toString }
+implicit val string: Show[String] = Show.instance{ v: String => v }
+implicit val bool: Show[Boolean] = Show.instance{ v: Boolean => if(v) "yes" else "no" }
+
+
+import shapeless._
+
+// YOUR CODE GOES HERE
+
+
+case class Cat(name: String, livesLeft: Int, female: Boolean)
+case class Person(name: String, age: Int)
+case class Aeroplane(airline: String, weight: Double)
+
+// goal:
+show(Cat("Gatarys", 7, true)) == "Gatarys, 7, yes"
+show(Person("Victor", 32)) == "Victor, 32"
+show(Aeroplane("Bla", 123.5)) == "Bla, 123.5"

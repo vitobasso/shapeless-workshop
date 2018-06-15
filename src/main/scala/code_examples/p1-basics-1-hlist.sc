@@ -1,5 +1,5 @@
 
-//hlist (heterogeneous list)
+//hlist: heterogeneous list
 import shapeless._
 
 type G = Int :: String :: HNil

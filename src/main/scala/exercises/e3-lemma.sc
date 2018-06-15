@@ -1,14 +1,3 @@
-import shapeless._
-import shapeless.ops.hlist._
-
-//more operations on HList
-val hlist = Seq.empty[Int] :: "bla" :: true :: "ble" :: 123 :: HNil
-hlist.filter[String]
-hlist.reverse
-hlist.tupled
-hlist.length.toInt
-
-
 /*
   Define LastOfType type class by combining:
       - Partition (filter)
@@ -39,3 +28,7 @@ hlist.length.toInt
     6. create the syntax sugar
         show that it works
  */
+
+import shapeless._
+import shapeless.ops.hlist._
+

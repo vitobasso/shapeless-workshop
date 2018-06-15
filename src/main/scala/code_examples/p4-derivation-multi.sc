@@ -2,31 +2,31 @@ import shapeless._
 
 //dependencies from previous worksheet
 case class Person(name: String, age: Int)
-trait SampleInstance[A] {
+trait Dummy[A] {
   def get: A
 }
-object SampleInstance {
-  def apply[A](implicit e: SampleInstance[A]): SampleInstance[A] = e
-  def instance[A](v: A): SampleInstance[A] = new SampleInstance[A] {
+object Dummy {
+  def apply[A](implicit e: Dummy[A]): Dummy[A] = e
+  def instance[A](v: A): Dummy[A] = new Dummy[A] {
     override def get: A = v
   }
 }
-def sample[A](implicit e: SampleInstance[A]): A = e.get
-implicit val strSampleInstance: SampleInstance[String] = SampleInstance.instance("bla")
-implicit val intSampleInstance: SampleInstance[Int] = SampleInstance.instance(1)
+def dummy[A](implicit e: Dummy[A]): A = e.get
+implicit val strDummy: Dummy[String] = Dummy.instance("bla")
+implicit val intDummy: Dummy[Int] = Dummy.instance(1)
 
 /*
-  derive SampleInstance[A] from smaller parts, for any A
+  derive Dummy[A] from smaller parts, for any A
 
-  goal: sample[Person] = Person("bla", 1)
-        sample[Cat] = ...
-        sample[Aeroplane] = ...
-        sample[List[Cat]] = ...
+  goal: dummy[Person] = Person("bla", 1)
+        dummy[Cat] = ...
+        dummy[Aeroplane] = ...
+        dummy[List[Cat]] = ...
         ...
  */
 
-//SampleInstance[A] ?
-def caseClassSampleInstance[A]: SampleInstance[A] = ???
+//Dummy[A] ?
+def caseClassDummy[A]: Dummy[A] = ???
 /* idea:
     - build upon smaller parts
     - use HList to generalize any type
@@ -36,11 +36,11 @@ def caseClassSampleInstance[A]: SampleInstance[A] = ???
         (...)                 Generic
 
    we need:
-      SampleInstance[HList]
-         SampleInstance[HNil]
-         SampleInstance[String]
-         SampleInstance[Int]
-         SampleInstance[...]
+      Dummy[HList]
+         Dummy[HNil]
+         Dummy[String]
+         Dummy[Int]
+         Dummy[...]
       Generic[A]
  */
 
@@ -69,25 +69,25 @@ def caseClassSampleInstance[A]: SampleInstance[A] = ???
 
 
 
-def caseClassSampleInstance1[A, Gen <: HList](implicit
-                                       e: SampleInstance[Gen],  //we'll define next
+def caseClassDummy1[A, Gen <: HList](implicit
+                                       e: Dummy[Gen],  //we'll define next
                                        gen: Generic.Aux[A, Gen] //shapeless creates for us
-                                      ): SampleInstance[A] = ???
+                                      ): Dummy[A] = ???
 
-def hlistSampleInstance[Head, Tail <: HList]: SampleInstance[Head :: Tail] = ???
-//SampleInstance[Int :: String :: HNil].apply == 1 :: "bla" :: HNil
+def hlistDummy[Head, Tail <: HList]: Dummy[Head :: Tail] = ???
+//Dummy[Int :: String :: HNil].apply == 1 :: "bla" :: HNil
 
 /* idea: recursive definition
-   SampleInstance[Head :: Tail]
-     SampleInstance[Head]
-     SampleInstance[Tail]
+   Dummy[Head :: Tail]
+     Dummy[Head]
+     Dummy[Tail]
 
    i.e.
-   SampleInstance[Int :: String :: HNil]
-    SampleInstance[Int]
-    SampleInstance[String :: HNil]
-      SampleInstance[String]
-      SampleInstance[HNil]
+   Dummy[Int :: String :: HNil]
+    Dummy[Int]
+    Dummy[String :: HNil]
+      Dummy[String]
+      Dummy[HNil]
  */
 
 
@@ -106,49 +106,49 @@ def hlistSampleInstance[Head, Tail <: HList]: SampleInstance[Head :: Tail] = ???
 
 
 
-implicit def hnilSampleInstance: SampleInstance[HNil] = SampleInstance.instance(HNil) //base case for the recursion
-implicit def hlistSampleInstance1[Head, Tail <: HList](implicit
-        head: SampleInstance[Head],   //some SampleInstance we've defined before: String, Int, ...
-        tail: SampleInstance[Tail]    //recursion. last is HNil
-       ): SampleInstance[Head :: Tail] = {
+implicit def hnilDummy: Dummy[HNil] = Dummy.instance(HNil) //base case for the recursion
+implicit def hlistDummy1[Head, Tail <: HList](implicit
+        head: Dummy[Head],   //some Dummy we've defined before: String, Int, ...
+        tail: Dummy[Tail]    //recursion. last is HNil
+       ): Dummy[Head :: Tail] = {
   val h: Head = head.get
   val t: Tail = tail.get
-  SampleInstance.instance(h :: t)
+  Dummy.instance(h :: t)
 }
-SampleInstance[Int :: String :: HNil].get
-  SampleInstance[Int]
-  SampleInstance[String :: HNil]
-    SampleInstance[String]
-    SampleInstance[HNil]
+Dummy[Int :: String :: HNil].get
+  Dummy[Int]
+  Dummy[String :: HNil]
+    Dummy[String]
+    Dummy[HNil]
 
-implicit def caseClassSampleInstance2[A, Gen <: HList](implicit
+implicit def caseClassDummy2[A, Gen <: HList](implicit
         //*order matters*
         gen: Generic.Aux[A, Gen], //shapeless creates for us.
-        e: Lazy[SampleInstance[Gen]]     //we've just defined SampleInstance[HList]
+        e: Lazy[Dummy[Gen]]     //we've just defined Dummy[HList]
                                   // *lazy needed so compiler doesn't give up the implicit search on complex cases*
-       ): SampleInstance[A] = {
+       ): Dummy[A] = {
   val hlist: Gen = e.value.get
   val a: A = gen.from(hlist)
-  SampleInstance.instance(a)
+  Dummy.instance(a)
 }
 
 
 //debug
-SampleInstance[Person].get
+Dummy[Person].get
   Generic[Person]
-  SampleInstance[String :: Int :: HNil]
-    SampleInstance[String]
-    SampleInstance[Int]
-    SampleInstance[HNil]
+  Dummy[String :: Int :: HNil]
+    Dummy[String]
+    Dummy[Int]
+    Dummy[HNil]
 
 
 //it works!
-implicit val bool: SampleInstance[Boolean] = SampleInstance.instance(true)
+implicit val bool: Dummy[Boolean] = Dummy.instance(true)
 case class IceCream(flavor: String, numCherries: Int, hasChocolateSauce: Boolean)
-sample[IceCream]
+dummy[IceCream]
 //*the next one only works with Lazy
 case class Gelateria(owner: Person, iceCream: IceCream, isOpen: Boolean)
-sample[Gelateria]
+dummy[Gelateria]
 
 
 

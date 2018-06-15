@@ -1,22 +1,13 @@
 import shapeless._
 import shapeless.ops.hlist._
 
-//operations on HList
-val hlist = Seq.empty[Int] :: "bla" :: true :: 123 :: HNil
-hlist.head
-hlist.tail
-hlist.last
-hlist.init
-
-
 /*
-  3. define Penultimate type class by combining:
+  Define Penultimate type class by combining:
       - Init
       - Last
 
   goal: hlist.penultimate == true
  */
-
 
 trait Penultimate[L] {
   type Out
@@ -42,4 +33,5 @@ implicit class CustomHListOps[L <: HList](hlist: L) {
 }
 
 //it works!
+val hlist = Seq.empty[Int] :: "bla" :: true :: 123 :: HNil
 hlist.penultimate
