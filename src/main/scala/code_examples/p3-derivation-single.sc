@@ -37,6 +37,9 @@ import shapeless._
 implicit def anyWrapperIsNumeric[A, N](implicit
                                          lazyGen: Lazy[Generic.Aux[A, N :: HNil]],
                                          num: Numeric[N]
+                                       //note:
+                                       //   - order matters
+                                       //   - lazy to workaround "implicit divergence"
                                          ): Numeric[A] =
   new Numeric[A] {
     private val gen = lazyGen.value

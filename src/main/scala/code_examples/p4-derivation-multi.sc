@@ -3,20 +3,20 @@ import shapeless._
 //dependencies from previous worksheet
 case class Person(name: String, age: Int)
 trait Dummy[A] {
-  def get: A
+  def value: A
 }
 object Dummy {
   def apply[A](implicit e: Dummy[A]): Dummy[A] = e
   def instance[A](v: A): Dummy[A] = new Dummy[A] {
-    override def get: A = v
+    override def value: A = v
   }
 }
-def dummy[A](implicit e: Dummy[A]): A = e.get
+def dummy[A](implicit e: Dummy[A]): A = e.value
 implicit val strDummy: Dummy[String] = Dummy.instance("bla")
 implicit val intDummy: Dummy[Int] = Dummy.instance(1)
 
 /*
-  derive Dummy[A] from smaller parts, for any A
+  Derive Dummy[A] from smaller parts, for any A
 
   goal: dummy[Person] = Person("bla", 1)
         dummy[Cat] = ...
@@ -35,13 +35,17 @@ def caseClassDummy[A]: Dummy[A] = ???
          Int    ->    HList     ->        A
         (...)                 Generic
 
-   we need:
-      Dummy[HList]
-         Dummy[HNil]
-         Dummy[String]
-         Dummy[Int]
-         Dummy[...]
-      Generic[A]
+   steps:
+      1. Dummy[A]
+          needs:
+            - Generic[A]
+            - Dummy[HList]
+      2. Dummy[HList]
+          needs:
+            - Dummy[Head], which needs:
+                - Dummy[HNil]
+                - Dummy[String], Dummy[Int], etc
+            - Dummy[Tail]  <- that's recursion
  */
 
 
@@ -68,12 +72,17 @@ def caseClassDummy[A]: Dummy[A] = ???
 
 
 
-
+//step 1
 def caseClassDummy1[A, Gen <: HList](implicit
-                                       e: Dummy[Gen],  //we'll define next
+                                       hlistDummy: Dummy[Gen],  //we'll define next
                                        gen: Generic.Aux[A, Gen] //shapeless creates for us
-                                      ): Dummy[A] = ???
+                                      ): Dummy[A] = {
+  val hlist: Gen = hlistDummy.value
+  val a: A = gen.from(hlist)
+  Dummy.instance(a)
+}
 
+//step 2
 def hlistDummy[Head, Tail <: HList]: Dummy[Head :: Tail] = ???
 //Dummy[Int :: String :: HNil].apply == 1 :: "bla" :: HNil
 
@@ -105,36 +114,37 @@ def hlistDummy[Head, Tail <: HList]: Dummy[Head :: Tail] = ???
 
 
 
-
+//step 2
 implicit def hnilDummy: Dummy[HNil] = Dummy.instance(HNil) //base case for the recursion
 implicit def hlistDummy1[Head, Tail <: HList](implicit
-        head: Dummy[Head],   //some Dummy we've defined before: String, Int, ...
+        head: Dummy[Head],   //we've defined before for String, Int, ...
         tail: Dummy[Tail]    //recursion. last is HNil
        ): Dummy[Head :: Tail] = {
-  val h: Head = head.get
-  val t: Tail = tail.get
+  val h: Head = head.value
+  val t: Tail = tail.value
   Dummy.instance(h :: t)
 }
-Dummy[Int :: String :: HNil].get
+Dummy[Int :: String :: HNil].value
   Dummy[Int]
   Dummy[String :: HNil]
     Dummy[String]
     Dummy[HNil]
 
+//step 1 fixed:
+//   - order of implicits matters
+//   - lazy to workaround "implicit divergence"
 implicit def caseClassDummy2[A, Gen <: HList](implicit
-        //*order matters*
-        gen: Generic.Aux[A, Gen], //shapeless creates for us.
-        e: Lazy[Dummy[Gen]]     //we've just defined Dummy[HList]
-                                  // *lazy needed so compiler doesn't give up the implicit search on complex cases*
+        gen: Generic.Aux[A, Gen],  //shapeless creates for us.
+        hlistDummy: Lazy[Dummy[Gen]]  //we've defined Dummy[HList] above
        ): Dummy[A] = {
-  val hlist: Gen = e.value.get
+  val hlist: Gen = hlistDummy.value.value
   val a: A = gen.from(hlist)
   Dummy.instance(a)
 }
 
 
 //debug
-Dummy[Person].get
+Dummy[Person].value
   Generic[Person]
   Dummy[String :: Int :: HNil]
     Dummy[String]

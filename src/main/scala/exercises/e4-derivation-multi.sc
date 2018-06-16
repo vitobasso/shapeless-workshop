@@ -1,23 +1,28 @@
 /*
-  4. derive Show[A] from smaller parts, for any A
+  Derive Show[A] from smaller parts, for any A
 
       String
          Int    ->    HList     ->        A
         (...)                 Generic
 
-   we'll need:
-      Show[HList]
-         Show[HNil]
-         Show[String]
-         Show[Int]
-         Show[...]
-      Generic[A]
+   steps:
+      1. Show[A]
+          needs:
+            - Generic[A]
+            - Show[HList]
+      2. Show[HList]
+          needs:
+            - Show[Head], which needs:
+                - Show[HNil]
+                - Show[String], Show[Int], etc
+            - Show[Tail]  <- that's recursion
 
    goal:
       show(cat) == "Gatarys, 7, yes"
       show(person) == ...
       show(aeroplane) == ...
       ...
+
  */
 trait Show[A] {
   def show(a: A): String
