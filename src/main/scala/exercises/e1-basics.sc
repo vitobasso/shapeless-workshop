@@ -1,7 +1,14 @@
-import shapeless._
 
 /*
-  1. convert Cat -> HList -> Book
+  Convert Cat -> HList -> Book
  */
-case class Cat(name: String, livesLeft: Int, female: Boolean)
-case class Book(title: String, pages: Int, hardcover: Boolean)
+case class Cat(name: String, livesLeft: Int, isFemale: Boolean)
+case class Book(title: String, pages: Int, isHardcover: Boolean)
+
+val cat = Cat("Your cat's name", 7, true)
+
+import shapeless._
+
+//YOUR CODE GOES HERE
+val hlist = ???
+val book = ???
