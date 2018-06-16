@@ -38,15 +38,13 @@ implicit val int: Show[Int] = Show.instance{ v: Int => v.toString }
 implicit val string: Show[String] = Show.instance{ v: String => v }
 implicit val bool: Show[Boolean] = Show.instance{ v: Boolean => if(v) "yes" else "no" }
 
+case class Cat(name: String, livesLeft: Int, female: Boolean)
+case class Person(name: String, age: Int)
+case class Aeroplane(airline: String, weight: Double)
 
 import shapeless._
 
 // YOUR CODE GOES HERE
-
-
-case class Cat(name: String, livesLeft: Int, female: Boolean)
-case class Person(name: String, age: Int)
-case class Aeroplane(airline: String, weight: Double)
 
 // goal:
 show(Cat("Gatarys", 7, true)) == "Gatarys, 7, yes"

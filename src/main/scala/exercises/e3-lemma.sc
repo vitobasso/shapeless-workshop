@@ -3,10 +3,6 @@
       - Partition (filter)
       - Last
 
-  goal:
-    hlist.lastOfType[String] == ble
-    hlist.lastOfType[Boolean] == true
-
   type classes used:
     Last.Aux[L, O]
       L: input hlist
@@ -20,11 +16,11 @@
   steps:
     1. define the type class
     2. define the companion, with Aux
-    3. define the implicit def (skeleton with ???s)
+    3. define the implicit def (signature and ???s)
     4. include the lemmas: Partition & Last
-        use their Aux (with ???s as types params)
+        use their Aux (with ???s as types params for now)
     5. place the type params properly (so they restrict between the lemmas)
-        implement the proof
+    6. implement the function body (a.k.a. proof)
     6. create the syntax sugar
         show that it works
  */
@@ -32,3 +28,10 @@
 import shapeless._
 import shapeless.ops.hlist._
 
+val hlist = Seq.empty[Int] :: "bla" :: true :: "ble" :: 123 :: HNil
+
+// YOUR CODE GOES HERE
+
+// goal:
+hlist.lastOfType[String] == "ble"
+hlist.lastOfType[Boolean] == true
