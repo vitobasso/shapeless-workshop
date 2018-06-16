@@ -26,7 +26,7 @@ object CanParse {
   //type class instances (using the constructor)
   implicit val int = constr[Int](str => Try(str.toInt).toOption, _.toString)
   implicit val userId = constr[UserId](str => Try(java.util.UUID.fromString(str)).toOption.map(UserId), _.uuid.toString)
-  implicit val bsn = constr[BSN](str => Try(str.toInt).map(BSN(_)).toOption, _.value.toString)
+  implicit val bsn = constr[BSN](str => Try(str.toLong).map(BSN).toOption, _.value.toString)
   implicit val iban = constr[IBAN](str => Some(IBAN(str)), _.value)
 }
 

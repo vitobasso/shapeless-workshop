@@ -3,7 +3,7 @@
         that does:
           def show(a: A): String
 
-    2.  create basic instances for:
+    2.  create instances for:
           Int
           String
           Boolean
@@ -11,7 +11,7 @@
           Cat(name: String, livesLeft: Int)
             - shows like "Gatarys, 7"
 
-    3.  create an implicit class to enable:
+    3.  enable:
           123.show == "123"
 
  */

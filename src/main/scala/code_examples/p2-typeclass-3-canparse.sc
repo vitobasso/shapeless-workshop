@@ -1,6 +1,8 @@
+import java.util.UUID
+
 import scala.util.Try
 
-case class UserId(uuid: java.util.UUID)
+case class UserId(uuid: UUID)
 case class BSN(value: Long)
 case class IBAN(value: String)
 
@@ -22,12 +24,12 @@ object CanParse {
 
   implicit val userId = new CanParse[UserId] {
     override def parse(str: String): Option[UserId] =
-      Try(java.util.UUID.fromString(str)).toOption.map(UserId)
+      Try(UUID.fromString(str)).toOption.map(UserId)
     override def serialize(a: UserId) = a.uuid.toString
   }
 
   implicit val bsn = new CanParse[BSN] {
-    override def parse(str: String): Option[BSN] = Try(str.toInt).map(BSN(_)).toOption
+    override def parse(str: String): Option[BSN] = Try(str.toLong).map(BSN).toOption
     override def serialize(a: BSN) = a.value.toString
   }
 
@@ -61,8 +63,9 @@ def encrypt[A: CanParse](a: A): String =
 def decrypt[A: CanParse](str: String): Option[A] =
   parse[A](str.map(Character.reverseBytes))
 
-val eBsn = encrypt(BSN(123))
+val userId = UserId(UUID.fromString("152f1b99-b6f8-4737-85a0-b232e669c20d"))
+val eUserId = encrypt(userId)
 val eIban = encrypt(IBAN("8709827342"))
-decrypt[BSN](eBsn)
+decrypt[UserId](eUserId)
 decrypt[BSN]("a funny string")
 decrypt[IBAN](eIban)
