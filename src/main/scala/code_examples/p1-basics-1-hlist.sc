@@ -12,8 +12,9 @@ val v1: Int = h.head
 val v2: String :: HNil = h.tail
 
 import shapeless.nat._
-val v3: String = h(_1)
-//val v4: String = h(_2) //doesn't compile
+val v3: Int = h(_0)
+val v4: String = h(_1)
+//val v5: String = h(_2) //doesn't compile
 
 h.last
 h.init
