@@ -17,12 +17,6 @@
                 - Show[String], Show[Int], etc
             - Show[Tail]  <- that's recursion
 
-   goal:
-      show(cat) == "Gatarys, 7, yes"
-      show(person) == ...
-      show(aeroplane) == ...
-      ...
-
  */
 trait Show[A] {
   def show(a: A): String
