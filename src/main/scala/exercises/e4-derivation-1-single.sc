@@ -3,7 +3,7 @@
       - "wrapper" here means a case class with only one field
 
     steps:
-      1. draft signature
+      1. draft signature for the generator
         - implicit def ... : Show[A]
       2. add implicit params
         - a Generic, to convert A to an HList of smaller parts
