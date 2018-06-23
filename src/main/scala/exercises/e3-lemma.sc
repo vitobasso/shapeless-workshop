@@ -45,20 +45,6 @@ val r2: Matching = partition.filter(hlist)
  */
 
 // YOUR CODE GOES HERE
-trait LastOfType[A, T] {
-  def apply(list: A): T
-}
-implicit def genLOT[A <: HList, Last, Matching <: HList, NotMatching <: HList](implicit
-                                                    part: Partition.Aux[A, Last, Matching, NotMatching],
-                                                    last: Last.Aux[Matching, Last]
-                                                    ): LastOfType[A, Last] =
-  new LastOfType[A, Last] {
-    override def apply(list: A): Last = last(part.filter(list))
-  }
-implicit class HListOps2[A <: HList](list: A) {
-  def lastOfType[O](implicit lot: LastOfType[A, O]): O = lot(list)
-}
-
 
 // goal:
 hlist.lastOfType[String]
