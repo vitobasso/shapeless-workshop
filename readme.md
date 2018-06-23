@@ -1,6 +1,6 @@
 This project contains exercises for a Shapeless workshop given at Lunatech.
 
-Slides can be found [here](https://docs.google.com/presentation/d/1z7wzSxgjyASt3twKpDB8XpK57eItwvbVG-vTWg74j7w/edit#slide=id.g25535e9f9d_0_104).
+Slides can be found [here](https://docs.google.com/presentation/d/1sc9KiMOu9HyyZNT1UKTI-OY8tR-pjYwUMCsa-5r3sAc/edit#slide=id.g15aca63a41_0_1918)
 
 
 # Shapeless
