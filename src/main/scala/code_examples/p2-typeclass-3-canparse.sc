@@ -40,10 +40,10 @@ object CanParse {
 }
 
 //syntax sugar
+def parse[A: CanParse](str: String): Option[A] = implicitly[CanParse[A]].parse(str)
 implicit class CanParseOps[A: CanParse](underlying: A) {
   def serialize: String = implicitly[CanParse[A]].serialize(underlying)
 }
-def parse[A: CanParse](str: String): Option[A] = implicitly[CanParse[A]].parse(str)
 
 
 
@@ -64,8 +64,8 @@ def decrypt[A: CanParse](str: String): Option[A] =
   parse[A](str.map(Character.reverseBytes))
 
 val userId = UserId(UUID.fromString("152f1b99-b6f8-4737-85a0-b232e669c20d"))
-val eUserId = encrypt(userId)
-val eIban = encrypt(IBAN("8709827342"))
-decrypt[UserId](eUserId)
-decrypt[BSN]("a funny string")
-decrypt[IBAN](eIban)
+val eUserId: String = encrypt(userId)
+val eIban: String = encrypt(IBAN("8709827342"))
+val dUserId: Option[UserId] = decrypt[UserId](eUserId)
+val dBsn: Option[BSN] = decrypt[BSN]("a funny string")
+val dIban: Option[IBAN] = decrypt[IBAN](eIban)
