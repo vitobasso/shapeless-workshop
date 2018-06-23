@@ -6,7 +6,7 @@ import shapeless.Generic
 case class Cat(name: String, age: Int)
 val c = Cat("Gatarys", 2)
 
-type G = String :: Int :: HNil
+type H = String :: Int :: HNil
 val genC = Generic[Cat]
 val g = genC.to(c)
 
