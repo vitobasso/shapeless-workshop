@@ -16,7 +16,7 @@ type InputHList = Seq[Int] :: String :: Boolean :: String :: Int :: HNil
       O: type of the last element
  */
 val last = implicitly[Last.Aux[InputHList, Int]]
-val res1: Int = last(hlist)
+val r1: Int = last(hlist)
 
 /*
   Partition.Aux[L, U, Prefix, Suffix]
@@ -29,7 +29,7 @@ val res1: Int = last(hlist)
 type Matching = String :: String :: HNil
 type NotMatching = Seq[Int] :: Boolean :: Int :: HNil
 val partition = implicitly[Partition.Aux[InputHList, String, Matching, NotMatching]]
-val res2: Matching = partition.filter(hlist)
+val r2: Matching = partition.filter(hlist)
 
 /*
   steps:
@@ -45,7 +45,21 @@ val res2: Matching = partition.filter(hlist)
  */
 
 // YOUR CODE GOES HERE
+trait LastOfType[A, T] {
+  def apply(list: A): T
+}
+implicit def genLOT[A <: HList, Last, Matching <: HList, NotMatching <: HList](implicit
+                                                    part: Partition.Aux[A, Last, Matching, NotMatching],
+                                                    last: Last.Aux[Matching, Last]
+                                                    ): LastOfType[A, Last] =
+  new LastOfType[A, Last] {
+    override def apply(list: A): Last = last(part.filter(list))
+  }
+implicit class HListOps2[A <: HList](list: A) {
+  def lastOfType[O](implicit lot: LastOfType[A, O]): O = lot(list)
+}
+
 
 // goal:
-hlist.lastOfType[String] == "ble"
-hlist.lastOfType[Boolean] == true
+hlist.lastOfType[String]
+hlist.lastOfType[Boolean]
