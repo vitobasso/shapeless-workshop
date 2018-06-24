@@ -18,6 +18,8 @@
             - Show[Tail]  <- that's recursion
 
  */
+
+//type class
 trait Show[A] {
   def show(a: A): String
 }
@@ -27,7 +29,11 @@ object Show {
     override def show(a: A): String = f(a)
   }
 }
-def show[A](a: A)(implicit e: Show[A]): String = e.show(a)
+implicit class ShowOps[A: Show](a: A) {
+  def show(implicit s: Show[A]): String = s.show(a)
+}
+
+//base instances
 implicit val int: Show[Int] = Show.instance{ v: Int => v.toString }
 implicit val string: Show[String] = Show.instance{ v: String => v }
 implicit val bool: Show[Boolean] = Show.instance{ v: Boolean => if(v) "yes" else "no" }
@@ -40,7 +46,7 @@ import shapeless._
 
 // YOUR CODE GOES HERE
 
-// goal:
-show(Cat("Gatarys", 7, true)) == "Gatarys, 7, yes"
-show(Person("Victor", 32)) == "Victor, 32"
-show(Aeroplane("Bla", 123.5)) == "Bla, 123.5"
+// goal:                          should return:
+Cat("Gatarys", 7, true).show      //"Gatarys, 7, yes"
+Person("Victor", 32).show         //"Victor, 32"
+Aeroplane("Bla", 123.5).show      //"Bla, 123.5"

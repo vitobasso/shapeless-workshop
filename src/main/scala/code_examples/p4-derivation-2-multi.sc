@@ -1,7 +1,8 @@
 import shapeless._
 
-//dependencies from previous worksheet
 case class Person(name: String, age: Int)
+
+//typeclass
 trait Dummy[A] {
   def value: A
 }
@@ -12,6 +13,8 @@ object Dummy {
   }
 }
 def dummy[A](implicit e: Dummy[A]): A = e.value
+
+//base instances
 implicit val strDummy: Dummy[String] = Dummy.instance("bla")
 implicit val intDummy: Dummy[Int] = Dummy.instance(1)
 
@@ -27,14 +30,7 @@ implicit val intDummy: Dummy[Int] = Dummy.instance(1)
 
 //Dummy[A] ?
 def caseClassDummy[A]: Dummy[A] = ???
-/* idea:
-    - build upon smaller parts
-    - use HList to generalize any type
-
-      String
-         Int    ->    HList     ->        A
-        (...)                 Generic
-
+/*
    steps:
       1. Dummy[A]
           needs:
@@ -124,11 +120,15 @@ implicit def hlistDummy1[Head, Tail <: HList](implicit
   val t: Tail = tail.value
   Dummy.instance(h :: t)
 }
+
+//debugging
 Dummy[Int :: String :: HNil].value
   Dummy[Int]
   Dummy[String :: HNil]
     Dummy[String]
     Dummy[HNil]
+
+
 
 //step 1 fixed:
 //   - order of implicits matters
@@ -143,7 +143,7 @@ implicit def caseClassDummy2[A, Gen <: HList](implicit
 }
 
 
-//debug
+//debugging
 Dummy[Person].value
   Generic[Person]
   Dummy[String :: Int :: HNil]
