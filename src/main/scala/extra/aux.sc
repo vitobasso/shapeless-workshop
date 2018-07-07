@@ -28,3 +28,10 @@ implicit def derivate3[A, B](implicit ev1: TypeClass1[A]{ type Out = B }, ev2: T
 type TypeClass1_Aux[I,O] = TypeClass1[I]{ type Out = O }
 implicit def derivate4[A, B](implicit ev1: TypeClass1_Aux[A,B], ev2: TypeClass2[B]): TypeClass3[ev2.Out] = ???
 
+
+
+trait NoDependentType1[In, Out]
+trait NoDependentType2[In, Out]
+trait NoDependentType3[In, Out]
+
+implicit def derivate5[A, B, C, D](implicit ev1: NoDependentType1[A, B], ev2: NoDependentType2[B, C]): NoDependentType3[C, D] = ???

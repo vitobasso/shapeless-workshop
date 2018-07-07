@@ -31,6 +31,8 @@ object DummyGeneration {
     implicit val string: SingleDummy[String] = instance("")
     implicit def option[B: SingleDummy]: SingleDummy[Option[B]] =
       instance(Some(SingleDummy[B].apply))
+    implicit def list[B: SingleDummy]: SingleDummy[List[B]] =
+      instance(List(SingleDummy[B].apply))
 
     // dummy generation for any case class (that has a SingleDummy for every field)
     implicit def anyCaseClass[A, Gen](implicit
